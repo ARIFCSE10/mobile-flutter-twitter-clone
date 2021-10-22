@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:twitter_clone/app/routes/app_pages.dart';
 
@@ -20,6 +21,8 @@ class LoginController extends GetxController {
   @override
   void onClose() {}
 
+  /// Email Validation
+  /// returns true for valid email
   bool validateEmail(String email) {
     if (!GetUtils.isEmail(email)) {
       emailErrorText.value = 'Please give a valid email';
@@ -30,9 +33,13 @@ class LoginController extends GetxController {
     }
   }
 
+  /// Password Validation
+  /// returns true for 6 - 10 digits AlphaNumeric password
   bool validatePassword(String password) {
-    if (password.length < 6 || password.length > 10) {
-      passwordErrorText.value = 'Password length is 6-10';
+    const Pattern special = r'^[0-9a-zA-Z]{6,10}$';
+    RegExp regex = RegExp(special.toString());
+    if (!regex.hasMatch(password)) {
+      passwordErrorText.value = 'Password should be 6-10 digit alpha-numeric';
       return false;
     } else {
       passwordErrorText.value = '';
@@ -45,20 +52,19 @@ class LoginController extends GetxController {
   }
 
   bool validateInput({String email = '', String password = ''}) {
-    if (validateEmail(email) && validatePassword(password)) {
-      isValidInput.value = true;
-      return true;
-    } else {
-      isValidInput.value = false;
-      return false;
-    }
+    bool _validEmail = validateEmail(email);
+    bool _validPassword = validatePassword(password);
+    isValidInput.value = _validEmail && _validPassword;
+    return isValidInput.value;
   }
 
-  authVerify({String? email, String? password}) {
+  authVerify({String email = '', String password = ''}) {
     /// :TODO: Check Auth
-    var error = true;
-    if (error) {
-      Get.snackbar('Error', 'Wrong User Input');
+    if (!validateInput(email: email, password: password)) {
+      if (!(Get.isSnackbarOpen ?? false)) {
+        Get.snackbar('Error', 'User Input Error',
+            colorText: Colors.redAccent, snackPosition: SnackPosition.BOTTOM);
+      }
     } else {
       Get.offAllNamed(Routes.HOME);
     }

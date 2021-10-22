@@ -43,8 +43,7 @@ class LoginView extends GetView<LoginController> {
               keyboardType: TextInputType.emailAddress,
               controller: _emailController,
               onChanged: (String email) {
-                _controller.validateInput(
-                    email: email, password: _passwordController.text);
+                _controller.validateEmail(email.trim());
               },
               maxLines: 1,
               decoration: InputDecoration(
@@ -90,8 +89,7 @@ class LoginView extends GetView<LoginController> {
             keyboardType: TextInputType.visiblePassword,
             controller: _passwordController,
             onChanged: (String password) {
-              _controller.validateInput(
-                  email: _emailController.text, password: password);
+              _controller.validatePassword(password);
             },
             maxLines: 1,
             obscureText: _controller.passwordVisibility.value,
@@ -134,15 +132,13 @@ class LoginView extends GetView<LoginController> {
   }
 
   _getLoginButton() {
-    return Obx(() => ElevatedButton(
-        onPressed: _controller.isValidInput.value
-            ? () => _controller.authVerify(
-                email: _emailController.text.trim(),
-                password: _passwordController.text)
-            : null,
+    return ElevatedButton(
+        onPressed: (() => _controller.authVerify(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim())),
         child: Text(
           'Login',
-        )));
+        ));
   }
 
   _getSignupButton() {
