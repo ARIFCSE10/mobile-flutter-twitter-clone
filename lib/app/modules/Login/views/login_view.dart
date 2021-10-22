@@ -151,9 +151,6 @@ class LoginView extends GetView<LoginController> {
               email: _emailController.text.trim(),
               password: _passwordController.text);
           if (_success) {
-            Get.snackbar('Success', 'User Login Successful',
-                colorText: Colors.greenAccent,
-                snackPosition: SnackPosition.BOTTOM);
             Get.offAllNamed(Routes.HOME);
           }
         }),

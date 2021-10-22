@@ -193,10 +193,7 @@ class SignupView extends GetView<SignupController> {
               email: _emailController.text.trim(),
               password: _passwordController.text);
           if (_success) {
-            Get.snackbar('Success', 'User Signup Successful',
-                colorText: Colors.greenAccent,
-                snackPosition: SnackPosition.BOTTOM);
-            Get.back();
+            Get.offAllNamed(Routes.HOME);
           }
         }),
         child: Text(

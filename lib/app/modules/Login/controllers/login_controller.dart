@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:twitter_clone/app/routes/app_pages.dart';
 import 'package:twitter_clone/app/service/user_auth.dart';
 
 class LoginController extends GetxController {

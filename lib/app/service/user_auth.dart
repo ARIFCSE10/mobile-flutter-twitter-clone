@@ -17,10 +17,20 @@ class UserAuth extends GetxService {
           .signInWithEmailAndPassword(email: email, password: password);
       return true;
     } on FirebaseAuthException catch (e) {
-      printError(info: e.toString());
+      if (e.code == 'user-not-found') {
+        printError(info: e.toString());
+        Get.snackbar('Error', 'User Not Registered',
+            colorText: Colors.redAccent, snackPosition: SnackPosition.BOTTOM);
+      } else if (e.code == 'wrong-password') {
+        printError(info: e.toString());
+        Get.snackbar('Error', 'User Credentials Error',
+            colorText: Colors.redAccent, snackPosition: SnackPosition.BOTTOM);
+      }
       return false;
     } catch (e) {
       printError(info: e.toString());
+      Get.snackbar('Error', 'User Login Failed!',
+          colorText: Colors.redAccent, snackPosition: SnackPosition.BOTTOM);
       return false;
     }
   }
