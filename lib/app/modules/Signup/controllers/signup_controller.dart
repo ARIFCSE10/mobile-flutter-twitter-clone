@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:twitter_clone/app/routes/app_pages.dart';
+import 'package:twitter_clone/app/service/user_auth.dart';
 
 class SignupController extends GetxController {
-  final Rx<String> nameErrorText = ''.obs;
+  // final Rx<String> nameErrorText = ''.obs;
   final Rx<String> emailErrorText = ''.obs;
   final Rx<String> passwordErrorText = ''.obs;
   final Rx<bool> passwordVisibility = true.obs;
   final Rx<bool> isValidInput = false.obs;
+  final Rx<bool> isLoading = false.obs;
 
   @override
   void onInit() {
@@ -22,15 +24,15 @@ class SignupController extends GetxController {
   @override
   void onClose() {}
 
-  bool validateName(String name) {
-    if (name.trim().isEmpty) {
-      nameErrorText.value = 'Please enter full name';
-      return false;
-    } else {
-      nameErrorText.value = '';
-      return true;
-    }
-  }
+  // bool validateName(String name) {
+  //   if (name.trim().isEmpty) {
+  //     nameErrorText.value = 'Please enter full name';
+  //     return false;
+  //   } else {
+  //     nameErrorText.value = '';
+  //     return true;
+  //   }
+  // }
 
   /// Email Validation
   /// * returns true for valid email
@@ -64,23 +66,27 @@ class SignupController extends GetxController {
 
   bool validateInput(
       {String email = '', String password = '', String name = ''}) {
-    bool _validName = validateName(name);
+    // bool _validName = validateName(name);
     bool _validEmail = validateEmail(email);
     bool _validPassword = validatePassword(password);
-    isValidInput.value = _validName && _validEmail && _validPassword;
+    isValidInput.value =
+        // _validName &&
+        _validEmail && _validPassword;
     return isValidInput.value;
   }
 
   authVerify({String? email, String? password}) {
     var error = true;
     if (error) {
-      Get.snackbar('Error', 'Wrong User Input');
+      Get.snackbar('Error', 'Wrong User Input',
+          colorText: Colors.greenAccent, snackPosition: SnackPosition.BOTTOM);
     } else {
       Get.offAllNamed(Routes.HOME);
     }
   }
 
-  bool doRegister({String name = '', String email = '', String password = ''}) {
+  Future<bool> doRegister(
+      {String name = '', String email = '', String password = ''}) async {
     if (!validateInput(name: name, email: email, password: password)) {
       if (!(Get.isSnackbarOpen ?? false)) {
         Get.snackbar('Error', 'User Input Error',
@@ -88,7 +94,10 @@ class SignupController extends GetxController {
       }
       return false;
     }
-
-    return true;
+    isLoading.value = true;
+    bool _response = await Get.find<UserAuth>()
+        .doUserSignup(email: email, password: password);
+    isLoading.value = false;
+    return _response;
   }
 }

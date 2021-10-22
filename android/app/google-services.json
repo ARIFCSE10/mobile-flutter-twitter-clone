@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "418317520995",
+    "project_id": "twitter-c-c113f",
+    "storage_bucket": "twitter-c-c113f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418317520995:android:c31b071aa69c4adfabe856",
+        "android_client_info": {
+          "package_name": "com.badsha.twitterc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418317520995-2csr32o3s252dkkisi4tv1vjgvoj2qrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzB-2YjcDIXx_ixXURTjQ_o1A6GBwGXIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418317520995-2csr32o3s252dkkisi4tv1vjgvoj2qrt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "418317520995-thp71fdvnqfm3vp36bqibdop6qhlaqju.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.badsha.twitterc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

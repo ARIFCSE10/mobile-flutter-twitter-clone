@@ -7,8 +7,10 @@ import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   final LoginController _controller = Get.find<LoginController>();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController =
+      TextEditingController(text: 'a@b.com');
+  final TextEditingController _passwordController =
+      TextEditingController(text: '123456');
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +19,30 @@ class LoginView extends GetView<LoginController> {
         title: Text('Login'),
         centerTitle: true,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          _getEmailField(),
-          _getPasswordField(),
-          _getLoginButton(),
-          Divider(
-            height: 16,
-            thickness: 1,
+      body: Obx(
+        () => Visibility(
+          visible: !_controller.isLoading.value,
+          replacement: Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 15,
+              color: Colors.greenAccent,
+            ),
           ),
-          _getSignupButton(),
-        ],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              _getEmailField(),
+              _getPasswordField(),
+              _getLoginButton(),
+              Divider(
+                height: 16,
+                thickness: 1,
+              ),
+              _getSignupButton(),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -133,9 +146,17 @@ class LoginView extends GetView<LoginController> {
 
   _getLoginButton() {
     return ElevatedButton(
-        onPressed: (() => _controller.authVerify(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim())),
+        onPressed: (() async {
+          bool _success = await _controller.authVerify(
+              email: _emailController.text.trim(),
+              password: _passwordController.text);
+          if (_success) {
+            Get.snackbar('Success', 'User Login Successful',
+                colorText: Colors.greenAccent,
+                snackPosition: SnackPosition.BOTTOM);
+            Get.offAllNamed(Routes.HOME);
+          }
+        }),
         child: Text(
           'Login',
         ));

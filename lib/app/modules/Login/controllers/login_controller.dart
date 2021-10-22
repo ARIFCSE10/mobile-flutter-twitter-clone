@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:twitter_clone/app/routes/app_pages.dart';
+import 'package:twitter_clone/app/service/user_auth.dart';
 
 class LoginController extends GetxController {
   final Rx<String> emailErrorText = ''.obs;
   final Rx<String> passwordErrorText = ''.obs;
   final Rx<bool> passwordVisibility = true.obs;
   final Rx<bool> isValidInput = false.obs;
+  final Rx<bool> isLoading = false.obs;
 
   @override
   void onInit() {
@@ -58,15 +60,19 @@ class LoginController extends GetxController {
     return isValidInput.value;
   }
 
-  authVerify({String email = '', String password = ''}) {
+  Future<bool> authVerify({String email = '', String password = ''}) async {
     /// :TODO: Check Auth
     if (!validateInput(email: email, password: password)) {
       if (!(Get.isSnackbarOpen ?? false)) {
         Get.snackbar('Error', 'User Input Error',
             colorText: Colors.redAccent, snackPosition: SnackPosition.BOTTOM);
       }
-    } else {
-      Get.offAllNamed(Routes.HOME);
+      return false;
     }
+    isLoading.value = true;
+    bool _response = await Get.find<UserAuth>()
+        .doUserLogin(email: email, password: password);
+    isLoading.value = false;
+    return _response;
   }
 }

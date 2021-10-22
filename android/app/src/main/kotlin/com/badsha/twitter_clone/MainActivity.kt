@@ -1,4 +1,4 @@
-package com.badsha.twitter_clone
+package com.badsha.twitterc
 
 import io.flutter.embedding.android.FlutterActivity
 

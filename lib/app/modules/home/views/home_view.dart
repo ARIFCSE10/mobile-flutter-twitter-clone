@@ -6,6 +6,7 @@ import 'package:twitter_clone/app/routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
+  final HomeController _controller = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,8 +17,15 @@ class HomeView extends GetView<HomeController> {
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: 'Logout',
-            onPressed: () {
-              Get.offAllNamed(Routes.LOGIN);
+            onPressed: () async {
+              bool _success = await _controller.doUserLogout();
+              if (_success) {
+                Get.offAllNamed(Routes.LOGIN);
+              } else {
+                Get.snackbar('Error', 'User Logout Failed',
+                    colorText: Colors.redAccent,
+                    snackPosition: SnackPosition.BOTTOM);
+              }
             },
           ),
         ],
