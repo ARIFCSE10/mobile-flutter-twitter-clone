@@ -7,12 +7,11 @@ import '../controllers/signup_controller.dart';
 
 class SignupView extends GetView<SignupController> {
   final SignupController _controller = Get.find<SignupController>();
-  final TextEditingController _nameController =
-      TextEditingController(text: 'Alpha Beta');
+  final TextEditingController _nameController = TextEditingController(text: '');
   final TextEditingController _emailController =
-      TextEditingController(text: 'a@b.com');
+      TextEditingController(text: '');
   final TextEditingController _passwordController =
-      TextEditingController(text: '123456');
+      TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {

@@ -9,9 +9,9 @@ import '../controllers/login_controller.dart';
 class LoginView extends GetView<LoginController> {
   final LoginController _controller = Get.find<LoginController>();
   final TextEditingController _emailController =
-      TextEditingController(text: 'a@b.com');
+      TextEditingController(text: '');
   final TextEditingController _passwordController =
-      TextEditingController(text: '123456');
+      TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
