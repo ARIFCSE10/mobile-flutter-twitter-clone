@@ -11,6 +11,9 @@ class HomeController extends GetxController {
   }
 
   late final Stream<QuerySnapshot> tweets;
+  String get userUid {
+    return Get.find<UserAuth>().currentUser?.uid.toString() ?? '';
+  }
 
   @override
   void onReady() {

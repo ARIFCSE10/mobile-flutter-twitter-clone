@@ -1,6 +1,6 @@
-class Tweet {
-  Tweet({this.uid, this.name, this.status, this.time});
-  factory Tweet.fromJson(Map<String, dynamic> json) => Tweet(
+class TweetModel {
+  TweetModel({this.uid, this.name, this.status, this.time});
+  factory TweetModel.fromJson(Map<String, dynamic> json) => TweetModel(
         uid: json['uid'] == null ? null : json['uid'],
         name: json['name'] == null ? null : json['name'],
         status: json['status'] == null ? null : json['status'],

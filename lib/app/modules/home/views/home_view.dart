@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:twitter_clone/app/data/db/firestore_db.dart';
 import 'package:twitter_clone/app/model/tweet_model.dart';
+import 'package:twitter_clone/app/modules/home/widgets/tweet_widget.dart';
 import 'package:twitter_clone/app/routes/app_pages.dart';
+import 'package:twitter_clone/app/service/user_auth.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -20,10 +21,8 @@ class HomeView extends GetView<HomeController> {
               icon: const Icon(Icons.account_box),
               tooltip: 'Profile',
               onPressed: () async {
-                Get.find<FireStoreDB>().readAllTweet();
-
-                // printInfo(
-                //     info: '${Get.find<UserAuth>().currentUser?.displayName}');
+                //:TODO:
+                printInfo(info: '${Get.find<UserAuth>().currentUser?.uid}');
               },
             ),
             IconButton(
@@ -53,66 +52,15 @@ class HomeView extends GetView<HomeController> {
                   itemBuilder: (context, index) {
                     var tweet = snapshot.data!.docs[index].data()
                         as Map<String, dynamic>;
-                    return _singleTweet(tweet: Tweet.fromJson(tweet));
+                    return TweetWidget(
+                      tweet: TweetModel.fromJson(tweet),
+                      uid: _controller.userUid,
+                      docId: snapshot.data!.docs[index].id,
+                    );
                   });
             }
             return Text('Something went wrong');
           },
         ));
-  }
-
-  _singleTweet({Tweet? tweet}) {
-    return Card(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Icon(
-              Icons.campaign_outlined,
-              size: 32,
-              color: Colors.blueGrey,
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 8.0,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    '${tweet?.time}',
-                    maxLines: 1,
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 8.0,
-                    ),
-                    child: Text(
-                      '${tweet?.name}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Text(
-                    '${tweet?.status} ',
-                    maxLines: 5,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
