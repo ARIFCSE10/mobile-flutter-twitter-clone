@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 
-import 'package:twitter_clone/app/modules/Index/bindings/index_binding.dart';
-import 'package:twitter_clone/app/modules/Index/views/index_view.dart';
 import 'package:twitter_clone/app/modules/Login/bindings/login_binding.dart';
 import 'package:twitter_clone/app/modules/Login/views/login_view.dart';
 import 'package:twitter_clone/app/modules/Signup/bindings/signup_binding.dart';
@@ -10,13 +8,16 @@ import 'package:twitter_clone/app/modules/add_tweet/bindings/add_tweet_binding.d
 import 'package:twitter_clone/app/modules/add_tweet/views/add_tweet_view.dart';
 import 'package:twitter_clone/app/modules/home/bindings/home_binding.dart';
 import 'package:twitter_clone/app/modules/home/views/home_view.dart';
+import 'package:twitter_clone/app/service/user_auth.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.INDEX;
+  static var INITIAL = Get.find<UserAuth>().currentUser == null
+      ? Routes.LOGIN
+      : Routes.HOME; //Routes.LOGIN;
 
   static final routes = [
     GetPage(
@@ -33,11 +34,6 @@ class AppPages {
       name: _Paths.SIGNUP,
       page: () => SignupView(),
       binding: SignupBinding(),
-    ),
-    GetPage(
-      name: _Paths.INDEX,
-      page: () => IndexView(),
-      binding: IndexBinding(),
     ),
     GetPage(
       name: _Paths.ADD_TWEET,
