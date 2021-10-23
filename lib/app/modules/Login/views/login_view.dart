@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:twitter_clone/app/routes/app_pages.dart';
+import 'package:twitter_clone/app/utils/widget_utils.dart';
 
 import '../controllers/login_controller.dart';
 
@@ -23,10 +24,7 @@ class LoginView extends GetView<LoginController> {
         () => Visibility(
           visible: !_controller.isLoading.value,
           replacement: Center(
-            child: CircularProgressIndicator(
-              strokeWidth: 15,
-              color: Colors.greenAccent,
-            ),
+            child: Loader(),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

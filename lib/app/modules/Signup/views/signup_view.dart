@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:twitter_clone/app/routes/app_pages.dart';
+import 'package:twitter_clone/app/utils/widget_utils.dart';
 
 import '../controllers/signup_controller.dart';
 
@@ -23,12 +24,7 @@ class SignupView extends GetView<SignupController> {
         body: Obx(
           () => Visibility(
               visible: !_controller.isLoading.value,
-              replacement: Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 15,
-                  color: Colors.greenAccent,
-                ),
-              ),
+              replacement: Loader(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

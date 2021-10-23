@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:twitter_clone/app/model/tweet_model.dart';
 import 'package:twitter_clone/app/modules/home/widgets/tweet_widget.dart';
 import 'package:twitter_clone/app/routes/app_pages.dart';
-import 'package:twitter_clone/app/service/user_auth.dart';
 import 'package:twitter_clone/app/utils/widget_utils.dart';
 
 import '../controllers/home_controller.dart';
@@ -22,8 +21,12 @@ class HomeView extends GetView<HomeController> {
               icon: const Icon(Icons.account_box),
               tooltip: 'Profile',
               onPressed: () async {
-                //:TODO:
-                printInfo(info: '${Get.find<UserAuth>().currentUser?.uid}');
+                if (!(Get.isSnackbarOpen ?? false)) {
+                  Get.snackbar(_controller.user?.displayName ?? 'User Name',
+                      _controller.user?.email ?? '--',
+                      colorText: Colors.blueAccent,
+                      snackPosition: SnackPosition.BOTTOM);
+                }
               },
             ),
             IconButton(
@@ -42,6 +45,14 @@ class HomeView extends GetView<HomeController> {
             ),
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () =>
+              Get.toNamed(Routes.ADD_TWEET, arguments: <String, dynamic>{
+            'is_editing_mode': false,
+          }),
+          child: Icon(Icons.add, color: Colors.white, size: 32),
+          backgroundColor: Colors.blueGrey,
+        ),
         body: _contentView());
   }
 
@@ -55,13 +66,20 @@ class HomeView extends GetView<HomeController> {
           return ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
-                var tweet =
+                var _doc =
                     snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                TweetModel _tweet = TweetModel.fromJson(_doc);
                 return TweetWidget(
-                    tweet: TweetModel.fromJson(tweet),
+                    tweet: _tweet,
                     uid: _controller.userUid,
                     editAction: (() {
-                      printInfo(info: 'Edit');
+                      Get.toNamed(Routes.ADD_TWEET,
+                          arguments: <String, dynamic>{
+                            'is_editing_mode': true,
+                            'tweet_reference':
+                                snapshot.data!.docs[index].reference,
+                            'status': _tweet.status,
+                          });
                     }),
                     deleteAction: (() {
                       _controller

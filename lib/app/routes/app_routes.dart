@@ -8,6 +8,7 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const SIGNUP = _Paths.SIGNUP;
   static const INDEX = _Paths.INDEX;
+  static const ADD_TWEET = _Paths.ADD_TWEET;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const LOGIN = '/login';
   static const SIGNUP = '$LOGIN/signup';
   static const INDEX = '/index';
+  static const ADD_TWEET = '/add-tweet';
 }

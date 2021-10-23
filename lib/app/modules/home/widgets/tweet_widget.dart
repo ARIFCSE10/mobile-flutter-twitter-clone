@@ -52,7 +52,7 @@ class TweetWidget extends StatelessWidget {
                 Text(
                   '${tweet?.time}',
                   maxLines: 1,
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(fontSize: 10),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -65,13 +65,16 @@ class TweetWidget extends StatelessWidget {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 8),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blueAccent, width: 1)),
+                  padding: EdgeInsets.all(8),
+                  margin: EdgeInsets.only(right: 8),
                   child: Text(
                     '${tweet?.status} ',
-                    maxLines: 8,
+                    maxLines: 10,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14),
+                    style: TextStyle(fontSize: 15),
                   ),
                 ),
               ],
