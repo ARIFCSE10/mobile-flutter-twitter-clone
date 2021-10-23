@@ -6,7 +6,8 @@ import '../controllers/signup_controller.dart';
 
 class SignupView extends GetView<SignupController> {
   final SignupController _controller = Get.find<SignupController>();
-  // final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _nameController =
+      TextEditingController(text: 'Alpha Beta');
   final TextEditingController _emailController =
       TextEditingController(text: 'a@b.com');
   final TextEditingController _passwordController =
@@ -32,7 +33,7 @@ class SignupView extends GetView<SignupController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  // _getNameField(),
+                  _getNameField(),
                   _getEmailField(),
                   _getPasswordField(),
                   _getRegisterButton(),
@@ -41,52 +42,52 @@ class SignupView extends GetView<SignupController> {
         ));
   }
 
-  // _getNameField() {
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(horizontal: 16),
-  //     height: 80,
-  //     child: Obx(
-  //       (() => TextField(
-  //             keyboardType: TextInputType.emailAddress,
-  //             controller: _nameController,
-  //             onChanged: (String name) {
-  //               _controller.validateName(name.trim());
-  //             },
-  //             maxLines: 1,
-  //             decoration: InputDecoration(
-  //                 prefixIcon: Padding(
-  //                   padding: const EdgeInsets.symmetric(horizontal: 8),
-  //                   child: Icon(
-  //                     Icons.account_circle,
-  //                     size: 24,
-  //                   ),
-  //                 ),
-  //                 prefixIconConstraints:
-  //                     const BoxConstraints(maxHeight: 48, maxWidth: 48),
-  //                 focusedBorder: OutlineInputBorder(
-  //                   borderRadius: BorderRadius.all(Radius.circular(8)),
-  //                   borderSide: BorderSide(width: 2, color: Colors.blueGrey),
-  //                 ),
-  //                 border: const OutlineInputBorder(
-  //                   borderRadius: BorderRadius.all(Radius.circular(8)),
-  //                   borderSide: BorderSide(width: 1, color: Colors.blueGrey),
-  //                 ),
-  //                 contentPadding: EdgeInsets.zero,
-  //                 hintText: 'Enter Full Name',
-  //                 suffixIconConstraints:
-  //                     BoxConstraints(maxHeight: 48, maxWidth: 48),
-  //                 errorBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.all(Radius.circular(8)),
-  //                     borderSide: BorderSide(width: 2, color: Colors.red)),
-  //                 errorText: _controller.nameErrorText.isEmpty
-  //                     ? null
-  //                     : _controller.nameErrorText.value,
-  //                 errorMaxLines: 1,
-  //                 errorStyle: TextStyle(color: Colors.redAccent)),
-  //           )),
-  //     ),
-  //   );
-  // }
+  _getNameField() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      height: 80,
+      child: Obx(
+        (() => TextField(
+              keyboardType: TextInputType.emailAddress,
+              controller: _nameController,
+              onChanged: (String name) {
+                _controller.validateName(name.trim());
+              },
+              maxLines: 1,
+              decoration: InputDecoration(
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Icon(
+                      Icons.account_circle,
+                      size: 24,
+                    ),
+                  ),
+                  prefixIconConstraints:
+                      const BoxConstraints(maxHeight: 48, maxWidth: 48),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    borderSide: BorderSide(width: 2, color: Colors.blueGrey),
+                  ),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    borderSide: BorderSide(width: 1, color: Colors.blueGrey),
+                  ),
+                  contentPadding: EdgeInsets.zero,
+                  hintText: 'Enter Full Name',
+                  suffixIconConstraints:
+                      BoxConstraints(maxHeight: 48, maxWidth: 48),
+                  errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      borderSide: BorderSide(width: 2, color: Colors.red)),
+                  errorText: _controller.nameErrorText.isEmpty
+                      ? null
+                      : _controller.nameErrorText.value,
+                  errorMaxLines: 1,
+                  errorStyle: TextStyle(color: Colors.redAccent)),
+            )),
+      ),
+    );
+  }
 
   _getEmailField() {
     return Container(
@@ -189,7 +190,7 @@ class SignupView extends GetView<SignupController> {
     return ElevatedButton(
         onPressed: (() async {
           bool _success = await _controller.doRegister(
-              // name: _nameController.text.trim(),
+              name: _nameController.text.trim(),
               email: _emailController.text.trim(),
               password: _passwordController.text);
           if (_success) {

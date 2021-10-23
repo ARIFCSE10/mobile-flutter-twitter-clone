@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:twitter_clone/app/routes/app_pages.dart';
+import 'package:twitter_clone/app/service/user_auth.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -14,6 +15,14 @@ class HomeView extends GetView<HomeController> {
         title: Text('Home'),
         centerTitle: true,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.account_box),
+            tooltip: 'Profile',
+            onPressed: () async {
+              printInfo(
+                  info: '${Get.find<UserAuth>().currentUser?.displayName}');
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: 'Logout',

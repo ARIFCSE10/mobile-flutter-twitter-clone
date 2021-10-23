@@ -4,12 +4,6 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class UserAuth extends GetxService {
-  UserAuth() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      currentUser = user;
-    });
-  }
-
   Future<bool> doUserLogin(
       {required String email, required String password}) async {
     try {
@@ -36,10 +30,13 @@ class UserAuth extends GetxService {
   }
 
   Future<bool> doUserSignup(
-      {required String email, required String password}) async {
+      {required String name,
+      required String email,
+      required String password}) async {
     try {
-      final UserCredential _ = await FirebaseAuth.instance
+      final UserCredential _user = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      await _user.user?.updateDisplayName(name);
       return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -58,7 +55,9 @@ class UserAuth extends GetxService {
     }
   }
 
-  User? currentUser;
+  User? get currentUser {
+    return FirebaseAuth.instance.currentUser;
+  }
 
   Future<bool> doUserLogout() async {
     try {

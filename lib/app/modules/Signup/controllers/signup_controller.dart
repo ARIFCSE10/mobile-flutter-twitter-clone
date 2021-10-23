@@ -4,7 +4,7 @@ import 'package:twitter_clone/app/routes/app_pages.dart';
 import 'package:twitter_clone/app/service/user_auth.dart';
 
 class SignupController extends GetxController {
-  // final Rx<String> nameErrorText = ''.obs;
+  final Rx<String> nameErrorText = ''.obs;
   final Rx<String> emailErrorText = ''.obs;
   final Rx<String> passwordErrorText = ''.obs;
   final Rx<bool> passwordVisibility = true.obs;
@@ -24,15 +24,15 @@ class SignupController extends GetxController {
   @override
   void onClose() {}
 
-  // bool validateName(String name) {
-  //   if (name.trim().isEmpty) {
-  //     nameErrorText.value = 'Please enter full name';
-  //     return false;
-  //   } else {
-  //     nameErrorText.value = '';
-  //     return true;
-  //   }
-  // }
+  bool validateName(String name) {
+    if (name.trim().isEmpty) {
+      nameErrorText.value = 'Please enter full name';
+      return false;
+    } else {
+      nameErrorText.value = '';
+      return true;
+    }
+  }
 
   /// Email Validation
   /// * returns true for valid email
@@ -66,12 +66,10 @@ class SignupController extends GetxController {
 
   bool validateInput(
       {String email = '', String password = '', String name = ''}) {
-    // bool _validName = validateName(name);
+    bool _validName = validateName(name);
     bool _validEmail = validateEmail(email);
     bool _validPassword = validatePassword(password);
-    isValidInput.value =
-        // _validName &&
-        _validEmail && _validPassword;
+    isValidInput.value = _validName && _validEmail && _validPassword;
     return isValidInput.value;
   }
 
@@ -96,7 +94,7 @@ class SignupController extends GetxController {
     }
     isLoading.value = true;
     bool _response = await Get.find<UserAuth>()
-        .doUserSignup(email: email, password: password);
+        .doUserSignup(name: name, email: email, password: password);
     isLoading.value = false;
     return _response;
   }
