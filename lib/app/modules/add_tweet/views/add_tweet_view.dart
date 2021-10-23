@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../controllers/add_tweet_controller.dart';
 
 class AddTweetView extends GetView<AddTweetController> {
+  final int _maxLimit = 280;
   final AddTweetController _controller = Get.find<AddTweetController>();
   final TextEditingController _statusController =
       TextEditingController(text: Get.arguments['status'] ?? '');
@@ -46,10 +47,11 @@ class AddTweetView extends GetView<AddTweetController> {
               },
               maxLines: 10,
               minLines: 8,
-              maxLength: 280,
+              maxLength: _maxLimit,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(8),
-                counterText: '${_controller.tweetStatus.value.length}/280',
+                counterText:
+                    '${_controller.tweetStatus.value.length}/$_maxLimit',
                 prefixIconConstraints:
                     const BoxConstraints(maxHeight: 48, maxWidth: 48),
                 focusedBorder: OutlineInputBorder(
