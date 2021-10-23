@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/app/model/tweet_model.dart';
 
 class TweetWidget extends StatelessWidget {
-  const TweetWidget(
-      {Key? key, required this.tweet, required this.uid, required this.docId})
-      : super(key: key);
+  const TweetWidget({
+    Key? key,
+    required this.tweet,
+    required this.uid,
+    this.editAction,
+    this.deleteAction,
+  }) : super(key: key);
   final TweetModel? tweet;
   final String uid;
-  final String docId;
+  final Null Function()? editAction;
+  final Null Function()? deleteAction;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -31,7 +36,7 @@ class TweetWidget extends StatelessWidget {
           padding: EdgeInsets.all(8),
           child: Icon(
             Icons.campaign_outlined,
-            size: 24,
+            size: 32,
             color: Colors.blueGrey,
           ),
         ),
@@ -97,7 +102,7 @@ class TweetWidget extends StatelessWidget {
 
   _getEditButton() {
     return IconButton(
-      onPressed: () {},
+      onPressed: editAction,
       icon: Icon(
         Icons.edit,
         color: Colors.blueGrey,
@@ -108,7 +113,7 @@ class TweetWidget extends StatelessWidget {
 
   _getDeleteButton() {
     return IconButton(
-      onPressed: () {},
+      onPressed: deleteAction,
       icon: Icon(
         Icons.delete_outlined,
         color: Colors.redAccent,

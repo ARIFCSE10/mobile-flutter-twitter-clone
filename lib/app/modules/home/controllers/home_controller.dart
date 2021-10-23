@@ -26,4 +26,12 @@ class HomeController extends GetxController {
   Future<bool> doUserLogout() async {
     return await Get.find<UserAuth>().doUserLogout();
   }
+
+  Future<bool> editTweet({required DocumentReference doc}) async {
+    return Get.find<FireStoreDB>().editTweet(doc);
+  }
+
+  Future<bool> deleteTweet({required DocumentReference doc}) async {
+    return Get.find<FireStoreDB>().deleteTweet(doc);
+  }
 }

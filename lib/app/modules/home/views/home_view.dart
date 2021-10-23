@@ -5,6 +5,7 @@ import 'package:twitter_clone/app/model/tweet_model.dart';
 import 'package:twitter_clone/app/modules/home/widgets/tweet_widget.dart';
 import 'package:twitter_clone/app/routes/app_pages.dart';
 import 'package:twitter_clone/app/service/user_auth.dart';
+import 'package:twitter_clone/app/utils/widget_utils.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -41,26 +42,43 @@ class HomeView extends GetView<HomeController> {
             ),
           ],
         ),
-        body: StreamBuilder<QuerySnapshot>(
-          stream: _controller.tweets,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Text('Something went wrong');
-            } else if (snapshot.hasData || snapshot.data != null) {
-              return ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    var tweet = snapshot.data!.docs[index].data()
-                        as Map<String, dynamic>;
-                    return TweetWidget(
-                      tweet: TweetModel.fromJson(tweet),
-                      uid: _controller.userUid,
-                      docId: snapshot.data!.docs[index].id,
-                    );
-                  });
-            }
-            return Text('Something went wrong');
-          },
-        ));
+        body: _contentView());
+  }
+
+  _contentView() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: _controller.tweets,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Loader();
+        } else if (snapshot.hasData || snapshot.data != null) {
+          return ListView.builder(
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                var tweet =
+                    snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                return TweetWidget(
+                    tweet: TweetModel.fromJson(tweet),
+                    uid: _controller.userUid,
+                    editAction: (() {
+                      printInfo(info: 'Edit');
+                    }),
+                    deleteAction: (() {
+                      _controller
+                          .deleteTweet(
+                              doc: snapshot.data!.docs[index].reference)
+                          .then((bool success) {
+                        if (success) {
+                          Get.snackbar('Success', 'Tweet Deleted',
+                              colorText: Colors.blueAccent,
+                              snackPosition: SnackPosition.BOTTOM);
+                        }
+                      });
+                    }));
+              });
+        }
+        return Loader();
+      },
+    );
   }
 }
