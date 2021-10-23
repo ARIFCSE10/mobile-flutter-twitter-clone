@@ -1,16 +1,35 @@
-# twitter_clone
+# Twitter Clone
 
-A new Flutter project.
+## Author: Mohammed Badsha Alamgir
 
-## Getting Started
+### App Features
 
-This project is a starting point for a Flutter application.
+- Firebase Auth implementation -> User Authentication [Login/Signup]
+- Firebase Cloud Firestore implementation -> [Store/Update/Delete] Tweets in Realtime
+- GetX clean pattern -> App Architecture design / code structure
 
-A few resources to get you started if this is your first Flutter project:
+### Sample Image
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+#### Login Page
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+****
+
+![Login Image](/documentation/images/login.png)
+
+#### Signup Page
+
+****
+
+![Signup Image](/documentation/images/signup.png)
+
+#### Home Page
+
+****
+
+![Home Image](/documentation/images/home.png)
+
+#### Add Tweet Page
+
+****
+
+![Add Tweet Image](/documentation/images/add.png)
