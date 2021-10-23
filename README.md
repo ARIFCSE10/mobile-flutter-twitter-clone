@@ -1,6 +1,6 @@
 # Twitter Clone
 
-## Author: Mohammed Badsha Alamgir
+## Mohammed Badsha Alamgir
 
 ### App Features
 
