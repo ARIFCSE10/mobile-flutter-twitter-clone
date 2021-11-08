@@ -19,8 +19,7 @@ class AddTweetView extends GetView<AddTweetController> {
         centerTitle: true,
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           _getStatusField(),
           Divider(
@@ -35,11 +34,11 @@ class AddTweetView extends GetView<AddTweetController> {
 
   _getStatusField() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      height: 350,
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Obx(
         (() => TextField(
               keyboardType: TextInputType.multiline,
+              autofocus: true,
               controller: _statusController,
               onChanged: (String status) {
                 _controller.tweetStatus.value =
@@ -82,7 +81,6 @@ class AddTweetView extends GetView<AddTweetController> {
           }
           return;
         }
-
         bool _success = _controller.isEditingMode
             ? await _controller.editTweet(status: _statusController.text.trim())
             : await _controller.addTweet(status: _statusController.text.trim());
